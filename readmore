@@ -1,0 +1,7 @@
+#!/bin/bash
+
+read -p "Enter firstname, lastname and city: " first last city
+
+echo "Nice to meet you $first $last from $city!"
+
+exit 0

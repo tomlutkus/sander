@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Source the file colors for the variable
+. ./.colors
+
+echo $color
