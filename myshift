@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Presenting the arguments provided by the user
+echo "The script has $# arguments"
+echo "The arguments are: $*"
+
+# Iterating through the provided arguments
+while (( $# ))
+do
+	echo "print $1"
+	shift
+done
+
+exit 0
