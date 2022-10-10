@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Due to the point in time in the course, this script lacks the proper conditional checks
+sudo apt install -y vsftpd lftp
+sudo sed -i -e 's/anonymous_enable=NO/anonymous_enable=YES/' /etc/vsftpd.conf
+sudo sed -i -e 's/listen=NO/listen=YES/' /etc/vsftpd.conf
+sudo sed -i -e 's/listen_ipv6=YES/listen_ipv6=NO/' /etc/vsftpd.conf
+
+# This can also be improved later
+sudo systemctl disable --now vsftpd
+sudo systemctl enable --now vsftpd
+sudo cp /etc/hosts /srv/ftp/
+
+# Fetching a file with a here document
+lftp localhost <<ENDSESSION
+ls
+get hosts
+ls
+quit
+ENDSESSION
