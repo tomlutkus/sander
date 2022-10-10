@@ -1,0 +1,4 @@
+#!/bin/bash
+
+read -p "Enter username or press Enter to use the default value: " username
+echo ${username:-$(whoami)}
