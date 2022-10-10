@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Simple demonstration backup script
+# Backs up all files provided as arguments in the current directory
+
+if [[ ! $1 ]]
+then
+	echo "Argument required!"
+	exit 9
+fi
+
+tar -cvf $(date +%d-%m-%Y).bak $@
