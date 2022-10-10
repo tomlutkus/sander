@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo ${1-?"Usage: $0 ARGUMENT"}
+echo "String length of the argument is ${#1}"
