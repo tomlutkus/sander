@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "You have selected service $1 to be installed"
+sudo apt install -y $1
+
+[[ $? == 0 ]] && sudo systemctl enable --now $1
+[[ $? == 0 ]] && sudo systemctl status $1 | grep 'active (running)'
+[[ $? == 0 ]] && echo "The service $1 was successfully installed and started!" || echo "The script has failed!"
