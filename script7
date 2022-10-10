@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BLAH=rababarabarabararara
+clear
+
+echo BLAH=$BLAH
+echo 'The result of ##*ba is ' ${BLAH##*ba}
+echo 'The result of #*ba is ' ${BLAH#*ba}
+echo 'The result of %%*ba is ' ${BLAH%%*ba}
+echo 'The result of %*ba is ' ${BLAH%*ba}
