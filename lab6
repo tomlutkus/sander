@@ -1,7 +1,16 @@
 #!/bin/bash
 
 echo "You have selected service $1 to be installed"
-sudo apt install -y $1
+
+if grep -i 'ubuntu' /etc/os-release
+then
+        echo "You're running Ubuntu!"
+        sudo apt install -y $1
+elif grep -i 'red hat' /etc/os-release
+then
+        echo "You're running Red Hat!"
+        sudo dnf install -y $1
+fi
 
 [[ $? == 0 ]] && sudo systemctl enable --now $1
 [[ $? == 0 ]] && sudo systemctl status $1 | grep 'active (running)'
