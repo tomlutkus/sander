@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+# These are the variables
+MEMFREE=$(free -m | grep '^Mem' | awk '{ print $4 }')  # Stores the current amount of free RAM
+NO_ARG=15  # Defines an error code for no arguments provided
+NO_MEM=14  # Defines an error code for no sufficient RAM available
+
+# Checks if arguments were provided to the script and exits with error code if not
+[[ ! $1 ]] && echo "ERROR: No arguments were provided" && exit $NO_ARG
+
+# Collects the amount of free memory that the user desires to have before starting a new service
+read -p "How much free memory should there be before starting a new service (MB)? " MEMLIM
+
+# Iterates through all the provided arguments to install, enable and start them as services
+for service in $@
+do
+        if (( $MEMFREE < $MEMLIM ))
+        then
+		# Exits the script with an error code if there is less RAM available than specified
+                echo "Insufficient RAM to start a new service"
+                exit $NO_MEM
+        fi
+	
+	# Installs, enables and starts the next service specified
+        sudo apt install -y "$service"
+        sudo systemctl enable "$service" --now
+
+done
+
+exit 0
