@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Capture user's input for the question
+read -p "Are you good? " GOOD
+
+# Translate the user's input to lower case
+GOOD="${GOOD,,}"  # alternatively echo $GOOD | tr [:upper] [:lower:]
+
+# Conditional to provide each possible answer
+case $GOOD in
+yes|oui)
+	echo "That's great!"
+	;;
+no)
+	echo "I'm sorry!"
+	;;
+*)
+	echo "Okay."
+	;;
+esac
+
+exit 0
