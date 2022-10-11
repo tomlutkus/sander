@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if grep lutkus /etc/passwd > /dev/null
+then
+	echo "Success"
+fi
