@@ -1,0 +1,33 @@
+#!/bin/bash
+
+FREE_DISK="$(df -m | grep '/$' | awk '{ print $4 }')"
+FREE_MEM="$(free -m | grep '^Mem' | awk '{ print $4 }')"
+
+read -p "Enter the lower limit for disk space (in MB): " DISK_LIM
+read -p "Enter the lower limit for free memory (in MB): " MEM_LIM
+echo "Free disk space: ${FREE_DISK}MB"
+echo "Free memory: ${FREE_MEM}MB"
+
+
+if [ $FREE_DISK -le $DISK_LIM ] && [ $FREE_MEM -le $MEM_LIM ]
+then
+	echo "WARNING: low system resources!"
+	exit 9
+fi
+
+
+if [ $FREE_DISK -le $DISK_LIM ]
+then
+	echo "WARNING: low disk space available!"
+	exit 8
+fi
+
+
+if [ $FREE_MEM -le $MEM_LIM ]
+then
+	echo "WARNING: low memory available!"
+	exit 7
+fi
+
+echo "System resources on normal levels"
+exit 0
