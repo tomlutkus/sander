@@ -1,26 +1,31 @@
 #!/bin/bash
 
+# Variables which will capture the values for free disk space and memory
 
-
-FREE_DISK_G="$(df -H | grep '/$' | awk '{ print $4 }')"
-FREE_DISK="${FREE_DISK_G%G}"
+FREE_DISK_G="$(df -H | grep '/$' | awk '{ print $4 }' | ${FREE_DISK_G%G})"
+FREE_DISK="${FREE_DISK_G%G}"  # Removes the G from the output of the df -H command
 FREE_MEM="$(free -m | grep '^Mem' | awk '{ print $4 }')"
 
+# Capture the limit values as imposed by the user, so that the script is flexible
 read -p "Enter the lower limit for disk space (in GB): " DISK_LIM
 read -p "Enter the lower limit for free memory (in MB): " MEM_LIM
 
+# Test for low disk + low memory
 if (( ($FREE_DISK < $DISK_LIM) && ($FREE_MEM < $MEM_LIM) ))
 then
 	echo "WARNING: low system resources!"
 	exit 9
+# Test for low disk
 elif (( $FREE_DISK < $DISK_LIM ))
 then
 	echo "WARNING: low disk space available!"
 	exit 8
+# Test for low memory
 elif (( $FREE_MEM < $MEM_LIM ))
 then
 	echo "WARNING: low memory available!"
 	exit 7
+# Otherwise tell user the resource levels are fine
 else
 	echo "System resources on normal levels"
 fi
