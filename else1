@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z $1 ]
+then
+	echo "No argument provided, please try again!"
+	exit 1
+fi
+
+echo "You only get here if an argument was provided!"
+
+exit 0
