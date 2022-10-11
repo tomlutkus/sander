@@ -2,8 +2,7 @@
 
 # Variables which will capture the values for free disk space and memory
 
-FREE_DISK_G="$(df -H | grep '/$' | awk '{ print $4 }' | ${FREE_DISK_G%G})"
-FREE_DISK="${FREE_DISK_G%G}"  # Removes the G from the output of the df -H command
+FREE_DISK="$(df -H | grep '/$' | awk '{ print $4 }' | sed 's/G//')"
 FREE_MEM="$(free -m | grep '^Mem' | awk '{ print $4 }')"
 
 # Capture the limit values as imposed by the user, so that the script is flexible
