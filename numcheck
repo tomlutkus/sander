@@ -1,0 +1,15 @@
+#!/bin/bash
+
+read -p "Enter a number: " NUM1
+read -p "Enter another number: " NUM2
+read -p "Enter a third number: " NUM3
+
+if [ $NUM1 -ge $NUM2 ] && [ $NUM1 -ge $NUM3 ]
+then
+	echo "$NUM1 is the largest number"
+elif [ $NUM2 -ge $NUM1 ] && [ $NUM2 -ge $NUM3 ]
+then
+	echo "$NUM2 is the largest number"
+else
+	echo "$NUM3 is the largest number"
+fi
