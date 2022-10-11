@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Backup script that stops if insufficient disk space is available
+
+if [[ ! $1 ]]
+then
+	read -p "Enter the name of a directory to back up: " dir
+else
+	dir=$1
+fi
+
+[[ -d ${dir}.backup ]] || mkdir ${dir}.backup
+
+for file in $dir/*
+do
+	used=$( df $dir | tail -1 | awk '{ print $5 }' | sed 's/%//' )
+	if (( $used > 15 ))
+	then
+		echo "Stopping: low disk space"
+		break
+	fi
+
+	cp $file ${dir}.backup
+done

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Convert file names to lower case if required
+
+FILES=$(ls)
+
+for file in $FILES
+do
+	if [[ "$file" != *[[:upper:]]* ]]
+	then
+		echo "$file doesn't contain uppercase"
+		continue
+	fi
+
+	OLD="$file"
+	NEW=${file,,}
+
+	mv "$OLD" "$NEW"
+	echo "$OLD has been renamed $NEW"
+done
