@@ -1,9 +1,11 @@
 ### Learning shell scripting with Sander
 **Bash Shell Scripting 2nd Edition, Sander van Vugt**
 
-Some scripts might be nearly identical to the scripts written by Sander, but only insofar as I ended up pursuing the same solution as he did.
-I will normally write my own scripts from scratch, no matter how trivial they might be, as I think no written line of code will ever go to
-waste. The more practice that we get, the more certain concepts will become second nature.
+Example scripts will be nearly identical to the ones from Sander, as I wrote them while watching the course, while labs are written mostly by me
+without an external reference.
+
+I try to write my own scripts from scratch, no matter how trivial they might be, as I think no written line of code will ever go to waste. The
+more practice that we get, the better.
 
 I will keep referring to these scripts to improve my skills and I might revisit some of them as I get better. Please feel free to look at them
 and fork what's in here. I will also revisit this README document and add things to it as I see fit, because I also believe that improving my
