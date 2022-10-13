@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# makeusr [-u uid] [-g gid] [-i info] [-h homedir] [-s shell] username
+
+# This function will instruct the user on how to use the script correctly
+function usage {
+        echo 'Usage: makesusr [-u uid] [-g gid] [-i info] [-h homedir]'
+        echo '[-s shell] username'
+        exit 1
+}
+
+# This function will show the help option to the user if the option ? is invoked
+function helpmessage {
+        echo "makeusr is a script..."
+        echo "blablabla"
+}
+
+# This will capture the options entered in the script by the user
+while getopts "u:g:i:h:s:" opt; do
+        case $opt in
+                u) uid=$OPTARG ;;
+                g) gid=$OPTARG ;;
+                i) info=$OPTARG ;;
+                h) home=$OPTARG ;;
+                s) shell=$OPTARG ;;
+                ?) helpmessage ;;
+                *) usage ;;
+        esac
+        # This is cleaning all the options away
+        shift $(( $OPTIND -1 ))
+done
+
+# If no username is provided, show instructions
+if [ -z "$1" ]; then
+        usage
+fi
+
+# If an argument is offered in addition to username, show instructions
+if [ -n "$2" ]; then
+        usage
+fi
+
+# If uid is empty, try uid 500 and add one if that uid is already taken, until an empty uid is found
+if [ -z "$uid" ]; then
+        uid=500
+        while cut -d : -f3 /etc/passwd | grep -x $uid
+        do
+                uid=$((uid+1)) > /dev/null
+        done
+fi
+
+# Add user to the gid from users
+if [ -z "$gid" ]; then
+        gid=$(grep users /etc/group | cut -d: -f3)
+fi
+
+# Request that information about the user be provided if it wasn't
+if [ -z "$info" ]; then
+        read -p "Please provide information about the user: " info
+fi
+
+# If no home directory was provided, assign the default
+if [ -z "$home" ]; then
+        home=/home/$1
+fi
+
+# If no shell was provided, assign bash as a default
+if [ -z "$shell" ]; then
+        shell=/bin/bash
+fi
+
+# Add the user to /etc/passwd with the specified configuration
+echo $1:x:$uid:$gid:$info:$home:$shell >> /etc/passwd
+
+# Add the user to /etc/shadow
+echo $1:::::::: >> /etc/shadow
+
+# Create the home directory
+mkdir -p $home
+
+# Set default permissions to the home directory
+chmod 750 $home
+
+# Set default ownership to the home directory
+chown $1:users $home
+
+# Request a user's password for the user
+passwd $1
+
+# Copy the contents of /etc/skel to the user's home
+shopt -s dotglob
+cp -r /etc/skel/* $home
+shopt -u dotglob
+
+exit 0
