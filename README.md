@@ -8,3 +8,6 @@ waste. The more practice that we get, the more certain concepts will become seco
 I will keep referring to these scripts to improve my skills and I might revisit some of them as I get better. Please feel free to look at them
 and fork what's in here. I will also revisit this README document and add things to it as I see fit, because I also believe that improving my
 Git and GitHub skills is never wasteful, and learning the markup language is great to enable myself to produce great documentation.
+
+All the scripts contained here are bash scripts. I chose not to add the .sh extension to them, but that's just a personal choice for this
+particular repo, it doesn't mean that this is how I roll.
